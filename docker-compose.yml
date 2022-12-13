@@ -1,0 +1,57 @@
+version: "3.7"
+services:
+    xapp:
+        image: php74custom
+        container_name: xapp
+        restart: unless-stopped
+        tty: true
+        working_dir: /var/www
+        volumes: 
+            - ./Apps:/var/www
+        networks: 
+            - app-network
+    xmysql:
+        image: mysql:5.7.33
+        container_name: xmysql
+        restart: unless-stopped
+        tty: true
+        environment: 
+            MYSQL_DATABASE: laravel8
+            MYSQL_ROOT_PASSWORD: 123456
+            MYSQL_PASSWORD: 123456
+            MYSQL_USER: laravel8
+            SERVICE_TAGS: dev
+            SERVICE_NAME: mysql
+        volumes: 
+            - ./mysql/data:/var/lib/mysql
+        networks:
+            - app-network
+    xnginx:
+        image: nginx:1.19.8-alpine
+        container_name: xnginx
+        restart: unless-stopped
+        tty: true
+        ports: 
+            - 7400:80
+        volumes: 
+            - ./Apps:/var/www
+            - ./nginx/conf:/etc/nginx/conf.d
+        networks: 
+            - app-network
+    xphpmyadmin:
+        image: phpmyadmin
+        container_name: xphpmyadmin
+        depends_on:
+          - xmysql
+        restart: always
+        ports:
+          - 7500:80
+        environment:
+          - PMA_ARBITRARY=1
+        networks: 
+            - app-network
+        volumes:
+          - ./phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php
+networks:
+    app-network:
+        driver: bridge
