@@ -24,16 +24,11 @@ Route::post('custom-login', [App\Http\Controllers\CustomAuthController::class, '
 Route::get('registration', [App\Http\Controllers\CustomAuthController::class, 'registration'])->name('register-user');
 Route::post('custom-registration', [App\Http\Controllers\CustomAuthController::class, 'customRegistration'])->name('register.custom');
 Route::get('signout', [App\Http\Controllers\CustomAuthController::class, 'signOut'])->name('signout');
+Route::get('add-custom', [App\Http\Controllers\CustomAuthController::class, 'create2']);
 
 Route::get('/demo', function () {
     return view('demo');
 });
-
-Route::get('my-home', [App\Http\Controllers\HomeController::class, 'myHome'])->name('home');
-Route::get('add-book', [App\Http\Controllers\HomeController::class, 'addBook'])->name('addBook');
-Route::post('save-book', [App\Http\Controllers\HomeController::class, 'saveBook'])->name('save-book');
-Route::get('/update-book/{id}', [App\Http\Controllers\HomeController::class, 'updateBook'])->name('update-book');
-Route::post('/modify-book/{id}', [App\Http\Controllers\HomeController::class, 'modifyBook'])->name('modify-book');
 
 #Owner Module Routes
 Route::get('/new-owner', [App\Http\Controllers\OwnerController::class, 'addOwner'])->name('new-owner');

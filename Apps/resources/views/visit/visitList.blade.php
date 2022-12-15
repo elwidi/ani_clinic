@@ -198,7 +198,15 @@ $(function() {
                 render: function (data, type, row) {
                   var url = '{{ route("visit-detail", ":id") }}';
                   url = url.replace(':id', row.id);
-                  var d = '<a type="button" class="btn btn-sm btn-default" href = "'+url+'"><i class = "fa fa-microscope"></i></a>';
+                  if(row['status'] == "Pending"){
+                    var d = '<a type="button" class="btn btn-sm btn-default" href = "'+url+'"><i class = "fa fa-microscope"></i></a>';
+                  } else if(row['status'] == 'Selesai') {
+                    var d = '<a type="button" class="btn btn-sm btn-default" href = "'+url+'"><i class = "fa fa-microscope"></i></a>&nbsp;';
+                    d += '<a type="button" class="btn btn-sm btn-default" href = "'+url+'"><i class = "fa fa-file-invoice-dollar"></i></a>';
+                  } else {
+                    var d = '<a type="button" class="btn btn-sm btn-default" href = "'+url+'"><i class = "fa fa-question"></i></a>';
+                  }
+                  
                   return d;
                 },
                 orderable: true,

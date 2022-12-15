@@ -8,6 +8,7 @@ use DataTables;
 use App\Models\PetVisit;
 // use App\Models\Vet;
 use App\Models\BillItem;
+use App\Models\VisitBill;
 use Illuminate\Http\Request;
 Use Illuminate\Database\QueryException;
 
@@ -63,19 +64,32 @@ class PetVisitController extends Controller
 
     public function updateVisit(Request $request, $id){
         $data = $request->all();
-        // dd($data);
 
         $dt = [
             'weight' => $data['weight'],
             'temperature' => $data['temperature'],
-            'diganosis' => $data['diagnosis'],
-            'notes' => $data['notes'],
+            'diagnose' => $data['diagnosis'],
+            'note' => $data['notes'],
             'status' => 'Selesai'
         ];
-
+        
+        // dd($data); 
+        $bill = $data['bill'];
+        dd($bill);
         try{
             $visit = PetVisit::find($id);
             $visit->update($dt);
+
+            foreach($bill as $y){
+                if(!isset($y['id'])){
+                    VisitBill::create([
+                    'name' => 'Elsa',
+                    'email' => 'elsa@abc.com',
+                    'password' => Hash::make('12345')
+                    ]);
+                }
+            }
+
             return redirect()->intended('visit');
         } catch(QueryException $e){
             $response = [
@@ -92,5 +106,6 @@ class PetVisitController extends Controller
             dd($y->pet);
         }
     }
+
     
 }

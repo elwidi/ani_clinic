@@ -43,31 +43,24 @@
                     </div>
                     <div class="form-group">
                         <label for="inputName">Suhu</label>
-                        <input type="text" class="form-control" id = "temperature" name = "temperature">
+                        <input type="text" class="form-control" id = "temperature" name = "temperature" value = "{{$visit->temperature}}">
                     </div>
                     <div class="form-group">
                         <label for="inputName">Weight</label>
-                        <input type="text" class="form-control" id = "" name = "weight">
+                        <input type="text" class="form-control" id = "" name = "weight" value = "{{$visit->weight}}">
                     </div>
                     <div class="form-group">
                         <label for="inputName">Diagnosis</label>
-                        <textarea class = "form-control" id = "diagnosis" name = "diagnosis" rows = '4'> </textarea>
+                        <textarea class = "form-control" id = "diagnosis" name = "diagnosis" rows = '4'>{{$visit->diagnose}} </textarea>
                     </div>
                     <div class="form-group">
                         <label for="inputName">Additional Notes</label>
-                        <textarea class = "form-control" id = "notes" name = "notes" rows = '4'></textarea>
+                        <textarea class = "form-control" id = "notes" name = "notes" rows = '4'>{{$visit->note}}</textarea>
                     </div>
-                    <!-- <div class="form-group">
-                        <label for="inputName">notes</label>
-                        <textarea class = "form-control" rows = '4'></textarea>
-                    </div> -->
                 </div>
-
-                <!-- <div class = "col-md-6">
-                    
-                </div> -->
                 <div class = "col-md-6">
-                    <table class = "table table-condensed">
+                  <button class="btn btn-sm btn-info" style = "float:right; margin-bottom:5px;"><i class = "fa fa-plus"></i>  &nbsp; Add Item</button>
+                    <table class = "table table-bordered">
                       <thead>
                         <tr>
                           <th></th>
@@ -76,14 +69,28 @@
                           <th>Notes</th>
                         </tr>
                       </thead>
+                      <tbody>
+                        <tr>
+                          <td>1</td>
+                          <td>
+                          <select class = "form-control" name = "bill[0][item_id]">
+                            <option value = "">-Select-</option>
+                            @foreach($bill_item as $item)
+                            <option value = "{{$item->id}}">{{$item->item_name}}</option>
+                            @endforeach
+                          </select>
+                          </td>
+                          <td><input type = "number" name = "bill[0][qty]" class = "form-control"></td>
+                          <td><textarea class = "form-control" name="bill[0][notes]"></textarea></td>
+                        </tr>
+                      </tbody>
                     </table>
                 </div>
               </div>
           </div>
           <!-- /.card-body -->
-          <div class="card-footer justify-content-between">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-success">Save</button>
+          <div class="card-footer">
+            <button type="submit" class="btn btn-success" style = "float:right;">Save</button>
           </div>
           </form>
         </div>
