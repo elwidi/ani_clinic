@@ -1,4 +1,4 @@
-# ani_clinic
+# Animal Clinic Record System
 
 Dockerized. Build with Laravel 8 (PHP 7.4)+ Yajra Datatables + Nginx + MySQL + PHPMyAdmin
 
