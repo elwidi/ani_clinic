@@ -9,6 +9,7 @@ use App\Models\PetVisit;
 // use App\Models\Vet;
 use App\Models\BillItem;
 use App\Models\VisitBill;
+use App\Models\VisitBillDetail;
 use Illuminate\Http\Request;
 Use Illuminate\Database\QueryException;
 
@@ -27,7 +28,6 @@ class PetVisitController extends Controller
     }
 
     public function visitList(){
-        // $vet = Vet::all();
         return view('visit.visitList');
     }
 
@@ -73,20 +73,23 @@ class PetVisitController extends Controller
             'status' => 'Selesai'
         ];
         
-        // dd($data); 
         $bill = $data['bill'];
-        dd($bill);
         try{
             $visit = PetVisit::find($id);
             $visit->update($dt);
 
+            $billId = VisitBill::create([
+                'pet_visit_id' => $id,
+                'payment_status' => 'Unpaid',
+            ])->id;
+            // dd($billId);
+
             foreach($bill as $y){
                 if(!isset($y['id'])){
-                    VisitBill::create([
-                    'name' => 'Elsa',
-                    'email' => 'elsa@abc.com',
-                    'password' => Hash::make('12345')
-                    ]);
+                    VisitBillDetail::create([
+                    'visit_id' => $id,
+                    'bill_id' => $billId, 
+                    ]); 
                 }
             }
 
@@ -97,6 +100,9 @@ class PetVisitController extends Controller
                 'message' => $e->errorInfo
             ];
         }
+
+        echo json_encode($response);
+        exit;
     }
 
     #understanding eloquent relation

@@ -27,10 +27,10 @@
       <form action="{{route('login.custom')}}" method="post">
         @csrf
         <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="Email" name = "email" id= "email" required autofocus>
+          <input type="text" class="form-control" placeholder="Username" name = "email" id= "email" required autofocus>
           <div class="input-group-append">
             <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
+              <span class="fas fa-user"></span>
             </div>
           </div>
         </div>
