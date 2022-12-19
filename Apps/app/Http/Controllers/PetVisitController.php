@@ -64,7 +64,6 @@ class PetVisitController extends Controller
 
     public function updateVisit(Request $request, $id){
         $data = $request->all();
-
         $dt = [
             'weight' => $data['weight'],
             'temperature' => $data['temperature'],
@@ -82,13 +81,13 @@ class PetVisitController extends Controller
                 'pet_visit_id' => $id,
                 'payment_status' => 'Unpaid',
             ])->id;
-            // dd($billId);
 
             foreach($bill as $y){
                 if(!isset($y['id'])){
                     VisitBillDetail::create([
-                    'visit_id' => $id,
-                    'bill_id' => $billId, 
+                        'visit_bill_id' => $billId,
+                        'bill_item_id' => $y['item_id'], 
+                        'qty' => $y['qty']
                     ]); 
                 }
             }
@@ -103,6 +102,11 @@ class PetVisitController extends Controller
 
         echo json_encode($response);
         exit;
+    }
+
+    public function updateBill($id){
+        $bill = VisitBill::with(['petVisit'])->get();
+        dd($bill);
     }
 
     #understanding eloquent relation
