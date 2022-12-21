@@ -48,11 +48,11 @@
     </div>
 </section>
 
-<div class="modal fade" id="modal-user-detail">
+<div class="modal fade" id="modal-billing">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Owner</h4>
+        <h4 class="modal-title">Billing</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -60,55 +60,31 @@
       <form role="form" id = "form_user" method="POST">
         @csrf
         <div class="modal-body">
-            <div class="form-group">
-              <label>No Registrasi</label>
-              <div class="form-group">
-                  <input type = "hidden" name = "owner_id" id = "owner_id">
-                  <input type = "text" name = "kode_pelanggan" id = "kode_pelanggan" class = "form-control">
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label>Klinik</label>
-              <div class="form-group">
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label>Nama</label>
-              <div class="form-group">
-                  <input type = "text" name = "name" id = "name" class = "form-control">
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label>Alamat</label>
-              <div class="form-group">
-                  <input type = "text" name = "alamat" id = "alamat" class = "form-control">
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label>No HP</label>
-              <div class="form-group">
-                  <input type = "text" name = "no_hp" id = "no_hp" class = "form-control">
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label>Email</label>
-              <div class="form-group">
-                  <input type = "text" name = "email" id = "email" class = "form-control">
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label>Foto Kartu Reg</label>
-              <div class="form-group">
-                  <input type = "file" name = "file" id = "file" class = "form-control">
-              </div>
-            </div>
-
+          <table class = "table table-bordered" id = "billing_table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Item</th>
+                <th>Qty</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>
+                <select class = "form-control" name = "bill[0][item_id]">
+                  <option value = "">-Select-</option>
+                  @foreach($bill_item as $item)
+                  <option value = "{{$item->id}}">{{$item->item_name}}</option>
+                  @endforeach
+                </select>
+                </td>
+                <td><input type = "number" name = "bill[0][qty]" class = "form-control"></td>
+                <td><textarea class = "form-control" name="bill[0][notes]"></textarea></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <div class="modal-footer justify-content-between">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -202,7 +178,7 @@ $(function() {
                     var d = '<a type="button" class="btn btn-sm btn-default" href = "'+url+'"><i class = "fa fa-microscope"></i></a>';
                   } else if(row['status'] == 'Selesai') {
                     var d = '<a type="button" class="btn btn-sm btn-default" href = "'+url+'"><i class = "fa fa-microscope"></i></a>&nbsp;';
-                    d += '<a type="button" class="btn btn-sm btn-default" href = "'+url+'"><i class = "fa fa-file-invoice-dollar"></i></a>';
+                    d += '<a type="button" class="btn btn-sm btn-default view-billing"><i class = "fa fa-file-invoice-dollar"></i></a>';
                   } else {
                     var d = '<a type="button" class="btn btn-sm btn-default" href = "'+url+'"><i class = "fa fa-question"></i></a>';
                   }
@@ -221,6 +197,22 @@ $(function() {
     });
 
     function table_callback(){
+      $('.view-billing').click(function(){
+        $('#modal-billing').modal('show');
+
+        $.ajax({
+          url: '/visit/update/',
+          type: 'POST',
+          dataType: 'json',
+          data:form.serialize(),
+          async: false,
+          success: function (res) {
+            if(res.status == 200){
+              location.reload();
+            }
+          }
+        })
+      })
     }
 
     $('#add-owner').click(function(){

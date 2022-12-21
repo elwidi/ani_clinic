@@ -28,7 +28,8 @@ class PetVisitController extends Controller
     }
 
     public function visitList(){
-        return view('visit.visitList');
+        $data['bill_item'] = BillItem::all(); 
+        return view('visit.visitList', $data);
     }
 
     public function visitDetail($id){
@@ -105,8 +106,11 @@ class PetVisitController extends Controller
     }
 
     public function updateBill($id){
-        $bill = VisitBill::with(['petVisit'])->get();
-        dd($bill);
+        $res['bill'] = VisitBill::with(['billDetail'])
+        ->where('pet_visit_id', '2')
+        ->first();
+        echo json_encode($res);
+        exit;
     }
 
     #understanding eloquent relation

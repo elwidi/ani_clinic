@@ -16,4 +16,8 @@ class VisitBill extends Model
     public function petVisit(){
         return $this->belongsTo(PetVisit::class, 'visit_id');
     }
+
+    public function billDetail(){
+        return $this->hasMany(VisitBillDetail::class, 'visit_bill_id');
+    }
 }
