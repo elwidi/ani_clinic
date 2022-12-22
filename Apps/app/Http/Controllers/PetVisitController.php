@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Session;
 use Redirect;
 use DataTables;
+use View;
 use App\Models\PetVisit;
 // use App\Models\Vet;
 use App\Models\BillItem;
@@ -111,6 +112,12 @@ class PetVisitController extends Controller
         ->first();
         echo json_encode($res);
         exit;
+    }
+
+    public function formBilling(){
+        return View::make("form.billing_form")
+        ->with("value", "something")
+        ->render();
     }
 
     #understanding eloquent relation
