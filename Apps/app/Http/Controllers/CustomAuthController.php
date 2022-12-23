@@ -71,4 +71,13 @@ class CustomAuthController extends Controller
 
         return Redirect('login');
     }
+
+    public function create2(){
+        return User::create([
+            'name' => 'admin2',
+            'email' => 'admin2',
+            'password' => Hash::make('12345')
+            ]);
+
+    }
 }

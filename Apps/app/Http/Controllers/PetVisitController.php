@@ -115,8 +115,17 @@ class PetVisitController extends Controller
     }
 
     public function formBilling(){
+        $res['bill'] = VisitBill::with(['billDetail'])
+        ->where('pet_visit_id', '2')
+        ->first();
+
+        // $res['detail'] = $res['bill']->billDetail;
+        // dd($res['detail']);
+
+        $res['bill_item'] = BillItem::all(); 
+
         return View::make("form.billing_form")
-        ->with("value", "something")
+        ->with($res)
         ->render();
     }
 

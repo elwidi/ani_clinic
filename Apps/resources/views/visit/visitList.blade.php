@@ -160,6 +160,7 @@ $(function() {
     function table_callback(){
       $('.view-billing').click(function(){
         $('#modal-billing').modal('show');
+        $('#modal-billing .modal-content').html('');
 
         $.ajax({
             url: '/visit/formbill',
@@ -167,7 +168,7 @@ $(function() {
             // data : {id:2},
             async: false,
             success: function (form) {
-                // $('#modal-desktop-survey .modal-content').append(form);
+                $('#modal-billing .modal-content').append(form);
             }
         })
       })

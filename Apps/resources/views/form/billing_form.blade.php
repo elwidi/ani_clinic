@@ -23,7 +23,7 @@
                 <select class = "form-control" name = "bill[0][item_id]">
                   <option value = "">-Select-</option>
                   @foreach($bill_item as $item)
-                  <option value = "{{$item->id}}">{{$item->item_name}}</option>
+                  <option value = "{{$item->id}}" <?php if($item->id == $bill->billDetail[0]->bill_item_id) echo "selected"; ?>>{{$item->item_name}}</option>
                   @endforeach
                 </select>
                 </td>
