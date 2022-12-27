@@ -129,6 +129,32 @@ class PetVisitController extends Controller
         ->render();
     }
 
+    public function updateBilling(Request $request){
+        $inp = $request->all();
+
+        $items = $inp['bill'];
+
+        foreach($items as $i){
+            $dt = array(
+                'bill_item_id' => $i['item_id'],
+                'qty' => $i['qty'],
+                'total' => $i['total'],
+                'notes' => $i['notes']
+
+            );
+
+            $billItem = VisitBillDetail::find($i['visit_bill_item_id']);
+            $billItem->update($dt);
+        }
+
+        $response = [
+            'status' => 200,
+            'message' => 'data ok saved.'
+        ];
+        
+        echo json_encode($response); exit;
+    }
+
     #understanding eloquent relation
     public function cekiData(){
         $data = PetVisit::with(['pet.owner'])->get();

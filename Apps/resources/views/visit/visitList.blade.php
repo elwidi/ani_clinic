@@ -5,7 +5,7 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0 text-dark">Owner</h1>
+        <h1 class="m-0 text-dark">Visit</h1>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
@@ -21,7 +21,7 @@
 <section class="content">
     <div class="card">
         <div class="card-header">
-      <h3 class="card-title">List Owner</h3>
+      <h3 class="card-title">List Visit</h3>
       <div style="float:right;">
         <a type="button" class="btn btn-success modif-data" id = "add-owner"><i class="fa fa-plus"></i>&nbsp; Add</a>
       </div>
@@ -126,7 +126,7 @@ $(function() {
 
             {
                 render: function (data, type, row) {
-                   return " <p> - </p>";
+                   return " <p> "+row.diagnose+" </p>";
                 },
                 orderable: true,
                 targets: 6

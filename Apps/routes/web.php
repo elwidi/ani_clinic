@@ -59,6 +59,7 @@ Route::get('/visit/detail/{id}', [App\Http\Controllers\PetVisitController::class
 Route::post('/visit/update/{id}', [App\Http\Controllers\PetVisitController::class, 'updateVisit'])->name('update-visit');
 Route::get('/visit/bill/{id}', [App\Http\Controllers\PetVisitController::class, 'updateBill'])->name('update-bill');
 Route::get('/visit/formbill', [App\Http\Controllers\PetVisitController::class, 'formBilling'])->name('update-bill');
+Route::post('/visit/updatebill', [App\Http\Controllers\PetVisitController::class, 'updateBilling']);
 // Route::get('/visit/ceki', [App\Http\Controllers\PetVisitController::class, 'cekiData']);
 
 
