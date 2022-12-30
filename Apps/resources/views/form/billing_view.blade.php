@@ -4,11 +4,9 @@
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
-<form role="form" id = "form_billing" method="POST">
+<form role="form">
   @csrf
   <div class="modal-body">
-    <input type = "hidden" name = "visit_bill_id" value = "<?php echo $bill->id?>">
-    <button class="btn btn-sm btn-info" id = "add_item" style = "float:left; margin-bottom:5px;"><i class = "fa fa-plus"></i>  &nbsp; Add Item</button>
     <table class = "table table-bordered" id = "billing_table">
       <thead>
         <tr>
@@ -50,30 +48,3 @@
     <button type="submit" class="btn btn-success">Submit</button>
   </div>
 </form>
-
-<script>
-$(function() {
-  $('#add_item').click(function(e){
-    e.preventDefault();
-  })
-
-  $('#form_billing').submit(function(r){
-    r.preventDefault();
-
-    var form = $(this);
-
-    $.ajax({
-      url: '/visit/updatebill',
-      type: 'POST',
-      data: form.serialize(),
-      dataType: 'json',
-      async: false,
-      success: function (res) {
-        if(res.status == 200){
-          $('#modal-billing').modal('toggle');
-        }
-      }
-    })
-  })
-
-})

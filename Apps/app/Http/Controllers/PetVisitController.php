@@ -25,7 +25,7 @@ class PetVisitController extends Controller
     }
 
     public function dtJson(){
-        return Datatables::of( PetVisit::with(['pet.owner'])->get())->make(true);
+        return Datatables::of(PetVisit::with(['pet.owner'])->get())->make(true);
     }
 
     public function visitList(){
@@ -119,14 +119,17 @@ class PetVisitController extends Controller
         ->where('pet_visit_id', '2')
         ->first();
 
-        // $res['detail'] = $res['bill']->billDetail;
-        // dd($res['detail']);
+        if($res['bill'] != 'Submitted'){
 
-        $res['bill_item'] = BillItem::all(); 
+        } else {
+            $res['bill_item'] = BillItem::all(); 
 
-        return View::make("form.billing_form")
-        ->with($res)
-        ->render();
+            return View::make("form.billing_form")
+            ->with($res)
+            ->render();
+        }
+
+        
     }
 
     public function updateBilling(Request $request){
@@ -146,6 +149,14 @@ class PetVisitController extends Controller
             $billItem = VisitBillDetail::find($i['visit_bill_item_id']);
             $billItem->update($dt);
         }
+
+        $bills = array(
+            'billing_status' => 'Submitted'
+        );
+
+        $billings = VisitBill::find($inp['visit_bill_id']);
+        $billings->update($bills);
+
 
         $response = [
             'status' => 200,
